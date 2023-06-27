@@ -3,8 +3,8 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True
-    def create_user(self,email,password=None, **extrafields):
-        user = self.model(email=email,**extrafields)
+    def create_user(self,email,password=None,password2=None, **extrafields):
+        user = self.model(email=self.normalize_email(email),**extrafields)
         user.set_password(password)
         user.save(using=self.db)
         return user
